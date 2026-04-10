@@ -1,11 +1,6 @@
+version: '3.8'
 services:
-  smartdocanalyzer-api:
-    container_name: smartdocanalyzer-api
-    build:
-      context: .
-      dockerfile: SmartDocAnalyzer.API/Dockerfile
+  redis:
+    image: redis
     ports:
-      - "5000:80"       # HTTP
-      - "5001:443"      # HTTPS
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - "6379:6379"

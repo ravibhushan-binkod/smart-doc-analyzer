@@ -1,6 +1,6 @@
-@SmartDocAnalyzer.API_HostAddress = http://localhost:5149
+@SmartDocAnalyzer.API_HostAddress = http://localhost:5138
 
-GET {{SmartDocAnalyzer.API_HostAddress}}/weatherforecast/
+GET {{SmartDocAnalyzer.API_HostAddress}}/document/list
 Accept: application/json
 
 ###

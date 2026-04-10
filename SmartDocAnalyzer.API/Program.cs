@@ -1,43 +1,45 @@
+using LiteDB;
+using SmartDocAnalyzer.Infrastructure;
+using SmartDocAnalyzer.Infrastructure.Services;
 
-namespace SmartDocAnalyzer.API
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+builder.Services.AddSingleton(new LiteDatabase("chat.db"));
+builder.Services.AddScoped<ChatHistoryService>();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddInfrastructure();
+builder.Services.AddCors(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
+    options.AddPolicy("AllowAngular",
+        policy =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
-            // Add services to the container.
+var app = builder.Build();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Services.AddMemoryCache();
-            builder.Services.AddDistributedMemoryCache();
-            builder.Services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            //app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-            app.UseSession();
-
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+app.UseCors("AllowAngular");
+app.UseAuthorization();
+app.MapControllers();
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.MapFallbackToFile("index.html");
+
+app.Run();

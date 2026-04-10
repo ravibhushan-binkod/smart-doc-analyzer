@@ -1,0 +1,53 @@
+<!-- Loader -->
+<div *ngIf="loading" class="text-gray-400 text-sm">
+  ⏳ Loading documents...
+</div>
+
+<!-- Documents -->
+<div *ngIf="!loading">
+
+  <div *ngFor="let doc of documents"
+       (click)="select(doc)"
+       class="flex justify-between items-start gap-3 p-3 mb-2 rounded cursor-pointer transition"
+       [class.bg-gray-700]="doc.documentId === selectedId"
+       [class.text-white]="doc.documentId === selectedId">
+
+    <!-- LEFT CONTENT -->
+    <div class="flex gap-3">
+
+      <div class="text-lg">📄</div>
+
+      <div class="flex flex-col">
+        <span class="text-sm font-medium">
+          {{ doc.fileName }}
+        </span>
+
+        <span class="text-xs opacity-70">
+          {{ doc.documentId }}
+        </span>
+      </div>
+
+    </div>
+
+    <!-- DELETE BUTTON -->
+    <button (click)="deleteDoc(doc, $event)" title="Delete document"
+            class="p-2 rounded hover:bg-red-600 transition flex items-center justify-center">
+
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="h-4 w-4 text-white"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 7h12M9 7V5h6v2m-7 4v6m4-6v6m4-6v6M5 7h14l-1 14H6L5 7z" />
+
+      </svg>
+
+    </button>
+
+  </div>
+
+</div>

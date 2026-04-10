@@ -1,0 +1,61 @@
+<div class="p-4">
+
+  <h2 class="text-xl font-bold mb-4">📂 Upload Document</h2>
+  <!-- Drag & Drop -->
+  <div class="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition"
+       [class.border-blue-500]="dragOver"
+       [class.bg-blue-50]="dragOver"
+       (drop)="onDrop($event)"
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave()">
+
+    <p class="text-gray-500">
+      Drag & Drop file here or
+    </p>
+
+    <label class="text-blue-500 cursor-pointer underline">
+      Browse
+      <input type="file" hidden (change)="onFileSelected($event)" />
+    </label>
+
+  </div>
+
+  <!-- File Preview -->
+  <div *ngIf="file" class="mt-4 p-3 bg-gray-100 rounded flex justify-between items-center">
+
+    <div>
+      <div class="text-xs text-gray-500">
+        📄 {{ file.name }}
+        ({{ (file.size / 1024).toFixed(2) }} KB)
+      </div>
+    </div>
+
+    <button (click)="file = null" class="text-red-500 text-sm">
+      ✖
+    </button>
+
+  </div>
+
+  <!-- Progress Bar -->
+  <div *ngIf="uploading" class="mt-4">
+
+    <div class="w-full bg-gray-200 rounded h-3">
+      <div class="bg-blue-500 h-3 rounded"
+           [style.width.%]="progress">
+      </div>
+    </div>
+
+    <div class="text-xs text-gray-500 mt-1">
+      Uploading... {{ progress }}%
+    </div>
+
+  </div>
+
+  <!-- Upload Button -->
+  <button *ngIf="file"
+          (click)="upload()"
+          class="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+    Upload Document
+  </button>
+
+</div>

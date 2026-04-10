@@ -1,0 +1,25 @@
+<div class="flex h-screen">
+
+  <!-- Sidebar -->
+  <div class="w-1/4 bg-gray-900 text-white flex flex-col">
+
+    <!-- Upload -->
+    <app-upload></app-upload>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-700 my-2"></div>
+
+    <!-- Documents -->
+    <div class="flex-1 overflow-auto p-2">
+      <h2 class="text-xl font-bold mb-4">📂 Documents</h2>
+      <app-document-list></app-document-list>
+    </div>
+
+  </div>
+
+  <!-- Chat Area -->
+  <div class="flex-1 bg-gray-100">
+    <app-chat></app-chat>
+  </div>
+
+</div>
